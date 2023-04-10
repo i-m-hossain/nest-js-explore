@@ -18,6 +18,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserType } from '../utils/types';
+import { ValidateCreateUserPipe } from './pipes/validate-create-user/validate-create-user.pipe';
 //controller decorator
 @Controller('users') //users route
 export class UsersController {
@@ -25,7 +26,8 @@ export class UsersController {
 
   @Post()
   @UsePipes(new ValidationPipe())
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body(ValidateCreateUserPipe) createUserDto: CreateUserDto) {
+    console.log(createUserDto.age.toPrecision());
     return this.usersService.create(createUserDto);
   }
 
