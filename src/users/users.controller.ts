@@ -13,14 +13,17 @@ import {
   ParseBoolPipe,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserType } from '../utils/types';
 import { ValidateCreateUserPipe } from './pipes/validate-create-user/validate-create-user.pipe';
+import { AuthGuard } from './guards/auth/auth.guard';
 //controller decorator
 @Controller('users') //users route
+@UseGuards(AuthGuard)
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
