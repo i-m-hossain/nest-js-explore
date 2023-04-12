@@ -1,11 +1,15 @@
-<<<<<<< HEAD
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-@Entity({ name: 'users' })
-=======
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
+import { Profile } from './Profile';
+import { Post } from './Post';
 
-@Entity()
->>>>>>> bc032445c963f26aac8356b38036cee6c98f1c92
+@Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
@@ -21,4 +25,11 @@ export class User {
 
   @Column({ nullable: true })
   authStrategy: string;
+
+  @OneToOne(() => Profile)
+  @JoinColumn()
+  profile: Profile;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: [Post];
 }
